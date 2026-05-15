@@ -1,0 +1,38 @@
+<!-- Django/Django-bboard/shop/templates/shop/product/list.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Магазин сборок ПК</title>
+</head>
+<body>
+    <h1>🖥️ Сборки компьютеров</h1>
+
+    {% if products %}
+        <p>Найдено товаров: {{ products|length }}</p>
+        
+        {% for product in products %}
+            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                <h2>
+                    <a href="{% url 'shop:product_detail' product.slug %}">
+                        {{ product.name }}
+                    </a>
+                </h2>
+                
+                <!-- Добавлена ссылка на категорию -->
+                <p>
+                    Категория: 
+                    <a href="{% url 'shop:products_by_category' product.category.slug %}">
+                        {{ product.category.name }}
+                    </a>
+                </p>
+                
+                <p>{{ product.description|linebreaks|truncatewords:30 }}</p>
+                <p><strong>Цена: {{ product.price }} ₽</strong></p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Товаров пока нет 😢</p>
+    {% endif %}
+</body>
+</html>
